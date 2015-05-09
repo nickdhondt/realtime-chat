@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 require_once LIBRARY_PATH . "/connect/connect.php";
 
 class User {

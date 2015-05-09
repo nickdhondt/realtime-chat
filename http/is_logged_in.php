@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require_once("../resources/config.php");
 require_once LIBRARY_PATH . "/user/user.php";
 

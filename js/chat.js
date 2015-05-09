@@ -65,14 +65,19 @@ var chat = chat || {};
 chat = {
     interpretSendMessageResponse: function(response) {
         if (xhr.requestSuccessful(response)) {
-            console.log("Success");
+            if (xhr.requestSuccessful(response)) {
+                var parsedResponse = xhr.parseJSON(response);
+            }
         }
     },
     keyDown: function(e) {
         if (e.keyCode === 13 && e.shiftKey === false) {
             e.preventDefault();
             var chatTextarea = document.getElementsByTagName("textarea")[0];
-            xhr.sendRequest("post", chatTextarea.value, "http/send_message.php", chat.interpretSendMessageResponse);
+            var messageData = {
+                "message": chatTextarea.value
+            };
+            xhr.sendRequest("post", JSON.stringify(messageData), "http/send_message.php", chat.interpretSendMessageResponse);
             chatTextarea.value = "";
         }
     }
