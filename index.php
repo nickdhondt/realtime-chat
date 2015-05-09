@@ -21,5 +21,20 @@
 
     </aside>
 </main>
+<div id="login">
+    <div>
+        <form>
+            <ul>
+                <li>Kies een gebruikersnaam:</li>
+                <li>
+                    <input type="text" placeholder="Gebruikersnaam"/>
+                </li>
+                <li>
+                    <input type="button" value="Inloggen"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
 </body>
 </html>
