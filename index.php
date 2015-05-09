@@ -10,9 +10,7 @@
 <body>
 <main>
     <div>
-        <div>
-            Chatbox
-        </div>
+        <div id="chatbox"></div>
         <div id="inputfield">
             <textarea rows="1" placeholder="Bericht"></textarea>
         </div>

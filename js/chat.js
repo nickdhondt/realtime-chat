@@ -87,7 +87,7 @@ var user = user || {};
 
 user = {
     username: false,
-    user_id: false,
+    userId: false,
     isLoggedIn: function() {
         xhr.sendRequest("get", "", "http/is_logged_in.php", user.interpretIsLoggedInResponse);
     },
@@ -98,6 +98,7 @@ user = {
             if (parsedResponse.request_legal === true) {
                 console.log("Loggend in");
                 application.disableEnterUsername();
+                stream.openStream();
             } else {
                 console.log("Not logged in");
                 user.askUsername();
@@ -129,6 +130,7 @@ user = {
 
             if (parsedResponse.request_legal === true) {
                 application.disableEnterUsername();
+                stream.openStream();
             }
         }
     }
@@ -160,5 +162,14 @@ application = {
 var stream = stream || {};
 
 stream = {
+    openStream: function () {
+        var eventSource = new EventSource("stream/chatstream.php");
 
+        eventSource.addEventListener("message", function(e) {
+            var parsedResponse = xhr.parseJSON(e.data);
+            var chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += parsedResponse[0].message + "<br/>";
+        }, false);
+    }
 };
