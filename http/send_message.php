@@ -23,7 +23,7 @@ if ($user->user_id !== false && $user->username !== false) {
         $request_legal = true;
         $message = new message();
 
-        $message->add_message($user->user_id, $post_data["message"]);
+        $message->add_message($user->user_id, nl2br(htmlentities($post_data["message"])));
     }
 } else {
     $errors[] = "Gebruiker niet ingelogd";

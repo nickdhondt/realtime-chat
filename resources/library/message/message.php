@@ -22,7 +22,7 @@ class message {
     function get_messages($timestamp, $recipient_id = 0) {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT message FROM message WHERE (recipient_id=0 OR recipient_id=?) && timestamp >=$timestamp");
+        $stmt = $conn->prepare("SELECT message, timestamp, m.user_id, u.username FROM message m INNER JOIN user u ON u.user_id = m.user_id WHERE (recipient_id=0 OR recipient_id=?) && timestamp >=$timestamp");
         $stmt->bind_param("i", $recipient_id);
         $stmt->execute();
         $result = $stmt->get_result();

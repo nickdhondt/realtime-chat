@@ -181,7 +181,7 @@ stream = {
             var parsedResponse = xhr.parseJSON(e.data);
             var chatbox = document.getElementById("chatbox");
 
-            chatbox.innerHTML += parsedResponse[0].message + "<br/>";
+            chatbox.innerHTML += parsedResponse[0].username + " - " + parsedResponse[0].message + "<br/>";
         }, false);
 
         eventSource.addEventListener("ping", function(e) {
@@ -203,6 +203,6 @@ stream = {
                 clearInterval(stream.maintainId);
                 stream.open();
             }
-        }, 1000);
+        }, 1500);
     }
 };
