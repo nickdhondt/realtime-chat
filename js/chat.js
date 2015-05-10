@@ -1,5 +1,7 @@
 "use strict";
 
+var eventSource;
+
 window.addEventListener("load", function() {init()});
 
 function init() {
@@ -98,7 +100,7 @@ user = {
             if (parsedResponse.request_legal === true) {
                 console.log("Loggend in");
                 application.disableEnterUsername();
-                stream.openStream();
+                stream.open();
             } else {
                 console.log("Not logged in");
                 user.askUsername();
@@ -130,7 +132,7 @@ user = {
 
             if (parsedResponse.request_legal === true) {
                 application.disableEnterUsername();
-                stream.openStream();
+                stream.open();
             }
         }
     }
@@ -156,20 +158,51 @@ application = {
                     e.preventDefault()
             });
         }
-    }
+    },
+    microtime: function(getAsFloat) {
+    var now = new Date().getTime() / 1000;
+    var s = parseInt(now, 10);
+
+    return (getAsFloat) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
+}
 };
 
 var stream = stream || {};
 
 stream = {
-    openStream: function () {
-        var eventSource = new EventSource("stream/chatstream.php");
+    lastPing: null,
+    maintainId: null,
+    open: function () {
+        stream.maintain();
+        eventSource = new EventSource("stream/chatstream.php");
 
         eventSource.addEventListener("message", function(e) {
+            // Temporary
             var parsedResponse = xhr.parseJSON(e.data);
             var chatbox = document.getElementById("chatbox");
 
             chatbox.innerHTML += parsedResponse[0].message + "<br/>";
         }, false);
+
+        eventSource.addEventListener("ping", function(e) {
+            var parsedResponse = xhr.parseJSON(e.data);
+
+            stream.lastPing = application.microtime(true);
+            console.log(parsedResponse.time);
+        }, false);
+
+        eventSource.onerror = function() {
+            console.log("Connection error");
+        }
+    },
+    maintain: function () {
+        stream.maintainId = setInterval(function() {
+            if (stream.lastPing < application.microtime(true) - 10) {
+                console.log("Connection lost");
+                eventSource.close();
+                clearInterval(stream.maintainId);
+                stream.open();
+            }
+        }, 1000);
     }
 };
