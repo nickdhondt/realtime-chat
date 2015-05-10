@@ -69,8 +69,3 @@ div#login form {
     padding: 1em;
     background: lightgray;
 }
-
-div#chatbox {
-    overflow-y: scroll;
-    height: calc(100% - 1.6em);
-}
