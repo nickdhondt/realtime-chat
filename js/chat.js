@@ -22,7 +22,6 @@ xhr = {
                 response = xhr.responseText;
                 callback(response);
             } else if (xhr.readyState === 4 && xhr.status !== 200) {
-                response = xhr.responseText;
                 callback();
             }
         };
@@ -160,11 +159,11 @@ application = {
         }
     },
     microtime: function(getAsFloat) {
-    var now = new Date().getTime() / 1000;
-    var s = parseInt(now, 10);
+        var now = new Date().getTime() / 1000;
+        var s = parseInt(now, 10);
 
-    return (getAsFloat) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
-}
+        return (getAsFloat) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
+    }
 };
 
 var stream = stream || {};

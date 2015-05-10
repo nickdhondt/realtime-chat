@@ -40,7 +40,6 @@ while ($script_beginning >= (microtime(true) - 280)) {
     }
 
     $new_messages = $message->get_messages($last_message);
-    print_r($new_messages);
     if (count($new_messages) > 0) {
         echo "event: message\n";
         echo "retry: 2000\n";

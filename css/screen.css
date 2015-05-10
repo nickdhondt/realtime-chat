@@ -20,14 +20,14 @@ main > div {
     height: 100%;
     width: 80%;
     float: left;
-    background: green;
+    background: #dcdcdc;
 }
 
 aside {
     float: left;
     height: 100%;
     width: 20%;
-    background: lightgreen;
+    background: #ebebeb;
 }
 
 textarea {
@@ -67,7 +67,7 @@ div#login form {
     display: inline-flex;
     margin: auto;
     padding: 1em;
-    background: lightgray;
+    background: #dcdcdc;
 }
 
 div#chatbox {
